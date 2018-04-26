@@ -18,7 +18,7 @@ end
 
 class CbuilderHandler
   cattr_accessor :default_format
-  self.default_format = Mime::CSV
+  self.default_format = if ::Rails::VERSION::MAJOR >= 5 then ::Mime[:csv] else ::Mime::CSV end
 
   def self.call(template)
     %{__already_defined = defined?(csv); csv||=CbuilderTemplate.new(self); #{template.source}
